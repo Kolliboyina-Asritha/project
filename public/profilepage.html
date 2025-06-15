@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 1rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 150px;
+    }
+
+    .logoimg {
+      height: 40px;
+      width: 40px;
+      object-fit: cover;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      margin-right: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-top: 15px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #f0c040;
+    }
+
+    .main {
+      display: flex;
+      margin-top: 1rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1e1e1e;
+      padding: 2rem 1rem;
+      height: calc(100vh - 72px);
+    }
+
+    .sidebar h2 {
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+      text-align: center;
+      color: #f0f0f0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      border-radius: 5px;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar a:hover {
+      background-color: #333;
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+      background-color: #121212;
+    }
+
+    .section {
+      background: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section h3 {
+      margin-bottom: 1rem;
+      color: #f0f0f0;
+    }
+
+    .section p {
+      margin: 0.5rem 0;
+      color: #ccc;
+    }
+
+    .registered-events {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .registered-events:hover {
+      transform: scale(1.02);
+      background-color: #272727;
+    }
+
+    .registered-events img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #444;
+    }
+
+    .registered-events-content h3 {
+      margin-bottom: 0.5rem;
+      color: #f0f0f0;
+    }
+
+    .registered-events-content p {
+      color: #ccc;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display: block;
+      margin-right: 50px;
+    }
+
+    #logout-link {
+      padding: 8px;
+      text-align: center;
+      background-color: #d32f2f;
+      color: white !important;
+      border-radius: 5px;
+      margin-top: 2rem;
+      font-weight: bold;
+    }
+
+    #logout-link:hover {
+      background-color: #b71c1c;
+    }
+
+    /* Form Styling */
+    .section form {
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .section form label {
+      font-weight: bold;
+      color: #f0f0f0;
+    }
+
+    .section form input {
+      padding: 0.5rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background-color: #222;
+      color: #f0f0f0;
+    }
+
+    .section form input:focus {
+      border-color: #777;
+      outline: none;
+    }
+
+    .section form button {
+      padding: 0.75rem;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .section form button:hover {
+      background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+      nav, .nav-links {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .main {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+      }
+
+      .sidebar a {
+        display: inline-block;
+        margin: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo-container">
+      <img class="logoimg" src="logo2.png" alt="Logo">
+      <h2 style="color:#f0c040">VISHNU INSTITUTE OF TECHNOLOGY</h2>
+    </div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Services</a>
+      <a href="profilepage.html"><div class="profile-icon" id="profile-icon"></div></a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>My Profile</h2>
+      <a onclick="toggleSection('personal')">Personal Details</a>
+      <a onclick="toggleSection('education')">Education Details</a>
+      <a id="logout-link">Logout</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="section" id="personal"></div>
+      <div class="section" id="education"></div>
+    </div>
+  </div>
+
+  <script>
+    let accessToken='';
+    let username = '';
+    function parseJwt(token) {
+    try {
+      const base64Payload = token.split('.')[1];
+      const decodedPayload = atob(base64Payload);
+      return JSON.parse(decodedPayload);
+    } catch (e) {
+      console.error("Invalid JWT", e);
+      return null;
+    }
+  }
+     async function refreshAccessToken() {
+        try{
+          const res=await fetch('/refresh',{
+            method:'POST',
+            credentials:'include'
+          });
+          const data=await res.json();
+          if(res.ok){
+            accessToken=data.accessToken;
+            const decoded = parseJwt(accessToken);
+           username = decoded?.UserInfo?.username || '';
+
+           console.log('AccessToken refreshed:', accessToken);
+           console.log('Username from token:', username);
+            
+          }
+          else{
+            console.warn('refresh token invalid or expired');
+          }
+        }
+        catch (err){
+          console.err('refresh failed:',err);
+          alert('something went wrong');
+          window.location.href='/weblogin.html';
+        }
+      }
+    let currentVisible = null;
+
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      if (currentVisible === id) {
+        section.classList.remove('active');
+        currentVisible = null;
+      } else {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        section.classList.add('active');
+        currentVisible = id;
+      }
+    }
+
+    document.getElementById('logout-link').addEventListener('click', async () => {
+      try {
+        const res = await fetch('/logout', {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+        if (res.status === 204) {
+          window.location.href = '/';
+        } else {
+          alert('Logout failed.');
+        }
+      } catch (err) {
+        console.error('Logout error:', err);
+        alert('An error occurred during logout.');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await refreshAccessToken();
+
+      try {
+        const res = await fetch('/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (data.exists) {
+          document.getElementById('personal').innerHTML = `
+            <h3>Personal Details</h3>
+            <p><strong>Name:</strong> ${data.profile.name}</p>
+            <p><strong>Email:</strong> ${data.profile.email}</p>
+            <p><strong>Phone:</strong> ${data.profile.phone}</p>
+            
+          `;
+          document.getElementById('education').innerHTML = `
+            <h3>Education Details</h3>
+            <p><strong>College:</strong> ${data.profile.college}</p>
+            <p><strong>Course:</strong> ${data.profile.course}</p>
+            <p><strong>Year:</strong> ${data.profile.year}</p>
+            
+          `;
+        } else {
+          document.querySelector('.content').innerHTML = `
+            <div class="section active">
+              <h3>Complete Your Profile</h3>
+              <form id="profileForm">
+                <label>Name:</label>
+                <input type="text" name="name" required>
+                <label>Email:</label>
+                <input type="email" name="email" required>
+                <label>Phone:</label>
+                <input type="text" name="phone" required>
+                <label>College:</label>
+                <input type="text" name="college" required>
+                <label>Course:</label>
+                <input type="text" name="course" required>
+                <label>Year:</label>
+                <input type="text" name="year" required>
+                <button type="submit">Save Profile</button>
+              </form>
+            </div>
+          `;
+
+          document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = {
+              name: form.name.value,
+              email: form.email.value,
+              phone: form.phone.value,
+              college: form.college.value,
+              course: form.course.value,
+              year: form.year.value
+            };
+
+            const postRes = await fetch('/profile', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+              },
+              body: JSON.stringify(formData)
+            });
+
+            const postData = await postRes.json();
+            alert(postData.message || 'Profile updated.');
+
+            if (postRes.ok) {
+              location.reload();
+            }
+          });
+      } }
+        catch (err) {
+          console.error('Error fetching profile:', err);
+          alert('your prev session completed so please logout and again login.');
+       }
+        
+       try{// Load event cards
+        const regRes = await fetch('/profile/registrations', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        const registrations = await regRes.json();
+
+        const addEventCard = (name, image, date) => {
+          const link = document.createElement('a');
+          link.href = '#';
+          link.style.textDecoration = 'none';
+
+          const card = document.createElement('div');
+          card.className = 'registered-events';
+          card.innerHTML = `
+            <img src="${image}" alt="${name}">
+            <div class="registered-events-content">
+              <h3>${name}</h3>
+              <p><strong>Date:</strong> ${date}</p>
+            </div>
+          `;
+
+          link.appendChild(card);
+          document.querySelector('.content').appendChild(link);
+        };
+
+        registrations.hackathons.forEach(h => addEventCard(h.eventName, h.image, h.date));
+        registrations.failathons.forEach(f => addEventCard(f.eventName, f.image, f.date));
+        registrations.quizzes.forEach(q => addEventCard(q.eventName, q.image, q.date));
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    });
+  </script>
+</body>
+</html>

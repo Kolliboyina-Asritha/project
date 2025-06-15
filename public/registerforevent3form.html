@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hackathon Registration</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    padding: 20px;
+    color: #f0f0f0;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: auto;
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1e90ff;
+    font-size: 1.8rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #ccc;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #999;
+  }
+
+  select option {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #006ad1;
+  }
+</style>
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Hackathon Registration Form</h2>
+    <form id="hackathonForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="regno">Register Number</label>
+      <input type="text" id="regno" name="regno" required />
+
+      <label for="college">College Name</label>
+      <input type="text" id="college" name="college" required />
+
+      <label for="branch">Branch</label>
+      <select id="branch" name="branch" required>
+        <option value="">-- Select Branch --</option>
+        <option value="CSE">CSE</option>
+        <option value="ECE">ECE</option>
+        <option value="MECH">MECH</option>
+        <option value="AIML">AIML</option>
+        <option value="AIDS">AIDS</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="IT">IT</option>
+        <option value="EEE">EEE</option>
+      </select>
+
+      <label for="teamname">Team Name</label>
+      <input type="text" id="teamname" name="teamname" required />
+
+      <label for="domain">Choose Domain</label>
+      <select id="domain" name="domain" required>
+        <option value="">-- Select Domain --</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Horticulture">Horticulture</option>
+        <option value="Medical">Medical</option>
+        <option value="IoT">Internet of Things (IoT)</option>
+        <option value="AI/ML">Artificial Intelligence & Machine Learning</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="problem">Problem Statement</label>
+      <textarea id="problemStatement" name="problem" rows="4" placeholder="Describe your problem statement..." required></textarea>
+
+      <button type="submit">Submit Registration</button>
+    </form>
+  </div>
+  <script>
+    let accessToken='';
+    let username = '';
+    function parseJwt(token) {
+    try {
+      const base64Payload = token.split('.')[1];
+      const decodedPayload = atob(base64Payload);
+      return JSON.parse(decodedPayload);
+    } catch (e) {
+      console.error("Invalid JWT", e);
+      return null;
+    }
+  }
+     async function refreshAccessToken() {
+        try{
+          const res=await fetch('/refresh',{
+            method:'POST',
+            credentials:'include'
+          });
+          const data=await res.json();
+          if(res.ok){
+            accessToken=data.accessToken;
+            const decoded = parseJwt(accessToken);
+           username = decoded?.UserInfo?.username || '';
+           console.log('Decoded Token:', decoded);
+           console.log('AccessToken refreshed:', accessToken);
+           console.log('Username from token:', username);
+           
+            
+          }
+          else{
+            console.warn('refresh token invalid or expired');
+          }
+        }
+        catch (err){
+          console.error('refresh failed:',err);
+          alert('something went wrong');
+          window.location.href='/weblogin.html';
+        }
+      }
+    document.addEventListener('DOMContentLoaded', async() => {
+      await refreshAccessToken();
+
+      document.getElementById('hackathonForm').addEventListener('submit', async (e) => {
+       e.preventDefault();
+
+       
+       if (!accessToken) return alert("You're not logged in!");
+
+        const form = e.target; 
+        const data = new FormData(form);
+       const formData = {
+         username:username,
+         name: data.get('name'),
+         email: data.get('email'),
+         regno: data.get('regno'),
+         college: data.get('college'),
+         branch: data.get('branch'),
+         teamname: data.get('teamname'),
+         domain: data.get('domain'),
+         problemStatement: data.get('problem')
+        };
+
+       try{
+          const res = await fetch('/api/register/hackathon', {
+           method: 'POST',
+           headers: {
+              'Content-Type': 'application/json',
+             'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(formData)
+          });
+
+          const result = await res.json();
+          alert(result.message || 'Registered!');
+          window.location.href = '/';
+        }
+        catch (err){
+          console.error('submission error',err);
+          alert('submission failed');
+        }
+      });
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;600;700&display=swap');
+
+:root{
+    --main-color:#3867d6;
+}
+
+*{
+    font-family: 'Nunito', sans-serif;
+    margin:0; padding:0;
+    box-sizing: border-box;
+    outline: none; border:none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .2s linear;
+}
+
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-padding-top: 7rem;
+    scroll-behavior: smooth;
+}
+html::-webkit-scrollbar{
+    width: 1rem;
+}
+html::-webkit-scrollbar-track{
+    background:#444;
+    
+}
+html::-webkit-scrollbar-thumb{
+    background:var(--main-color) ;
+    border-radius:5rem ;
+}
+body{
+    background: #222;
+}
+section{
+    padding: 2rem 9%;
+}
+
+
+.header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 9%;
+}
+
+.header .logo{
+    font-weight: bolder;
+    color: #fff;
+    font-size: 2.5rem;
+    color: var(--main-color );
+}
+.header .navbar a{
+    font-size: 1.7rem;
+    color: #fff;
+    margin-left: 2rem;
+}
+.header .navbar{
+    margin-left:24rem;
+    
+}
+.header .navbar a:hover{
+    color: var(--main-color);
+}
+
+.imag{
+    border-radius: 90%;
+    height: 50px;
+    width: 50px;
+}
+#menu-bars{
+    font-size: 3rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+ 
+     .hero {
+  background: #1e1e2f;
+  color: #fff;
+  text-align: center;
+  padding: 120px 60px;
+}
+
+.hero h1 {
+  font-size: 6rem;
+  margin-bottom: 10px;
+} 
+.p1{
+  font-size: 3rem;
+}
+  .btn{
+    margin-top: 5rem;
+    display: inline-block;
+    padding: .8rem 3rem;
+    font-size:1.7rem ;
+    border-radius: .5rem;
+    background: #666;
+      background-color: #00bfa6;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn:hover{
+    background: var(--main-color);
+}
+
+.about .row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.about .row .image{
+    flex: 1 1 45rem;
+    padding: 1rem;
+}
+.about .row .image img{
+    width: 100%;
+    height: 400px;
+    border-radius: .5rem;
+    border: 1rem solid #333;
+}
+.about .row .content{
+    flex: 1 1 45rem;
+
+}
+
+.about .row .content h3{
+    font-size: 3.5rem;
+    color: #fff;   
+}
+.about .row .content .p{
+    font-size: 1.5rem;
+    color: #eee;
+    padding: 1rem 0;
+    line-height: 2;   
+}
+.heading{
+    text-align: center;
+    padding-bottom:2rem;
+    padding-top: 2rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 4rem;
+}
+.heading span{
+    color:var(--main-color);
+    text-transform: uppercase;
+}
+/* event section*/
+.event{
+    color: #fff;
+    font-size: 2rem;
+}
+
+ ul{
+    color: #eee;
+    align-items: center;
+    font-size: 2rem;
+    margin-left: 40rem;
+ }
+    .row-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 20px;
+}
+
+.prize-box, .contact-box {
+  flex: 1 1 45%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  
+}
+
+.heading1 {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  color: #eee;
+  text-align: center;
+}
+.heading1 span{
+    color:var(--main-color);
+    text-transform: uppercase;
+}
+
+.class{
+    font-size: 2rem;
+   color: #eee;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem; /* adjust spacing between image and text */
+}
+.imag {
+  height: 50px;
+  width: 50px;
+  border-radius: 90%;
+  object-fit: cover;
+}
+.profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display:block;
+    }
+
+@media screen and (max-width: 768px) {
+  .prize-box, .contact-box {
+    flex: 1 1 100%;
+    font-size: 2rem;
+  }
+}
+
+
+
+
+    @media(max-width:991px){
+
+    html{
+        font-size: 55%;
+    }
+  
+    .header{
+        padding: 1.5rem 2rem;
+    }
+}
+@media(max-width:768px){
+    #menu-bars{
+        
+        display: initial;
+    }
+    .header .navbar{
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        border-top: .1rem solid #222;
+        background: #333;
+        clip-path: polygon(0 0,100% 0,100% 0,0 0);
+
+    }
+    .header .navbar.active{
+        clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+    }
+
+    .fa-times{
+        transform: rotate(180deg);
+    }
+    .header .navbar a{
+        display: flex;
+        background: #222;
+        border-radius: .5rem;
+        padding: 1.3rem;
+        margin: 1.3rem;
+        font-size: 2rem;
+    }
+}
+@media(max-width:450px){
+
+    html{
+        font-size: 50%;
+    }
+  
+    
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+          <div >
+             <img class="imag" src="logo2.png" >
+         </div>
+         <div>
+             <a href="#" class="logo">VISHNU INSTITUTE OF TECHNOLOGY</a>
+         </div>
+        </div> 
+        <nav class="navbar">
+            <a href="#about">About</a>
+            <a href="#event">Event Details</a>
+            <a href="#prizes">prizes</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div id="menu-bars" class="fas fa-bars">
+           
+        </div>
+       <a href="profilepage.html" title="Profile">
+        <div class="profile-icon" id="profile-icon"></div>
+    </header> 
+    <section class="hero">
+      <h1>Quiz Competition 2K25</h1>
+      <a href="registerforevent5.html" class="btn">Register Now</a>
+    </section>
+    <!--about hackathon-->
+    <section class="about" id="about">
+        <h1 class="heading"><span>about</span> quiz </h1>
+       <div class="row">
+        <div class="image">
+            <img src="event5.jpeg" alt="0">
+
+        </div>
+        <div class="content">
+            <p class="p">🔹The Engineering Quiz Competition is an exciting and intellectually stimulating event designed to challenge the minds of aspiring engineers.</p>
+            <p class="p">🔹A platform for students to demonstrate their understanding of core engineering subjects, scientific concepts, and technological trends.</p>
+            <p class="p">🔹Includes written, buzzer, and rapid-fire rounds designed to test both speed and accuracy in solving technical problems. </p>
+            <p class="p">🔹Encourages collaboration, critical thinking, and healthy competition among participants from various engineering disciplines.</p>
+            <p class="p">🔹Exciting prizes, certificates, and the chance to gain recognition for academic excellence and innovation.</p>
+            
+        </div>
+       </div>
+    </section>
+    <!--Event details-->
+    <section class="event" id="event">
+        <div>
+            <h1 class="heading"><span>event</span> description</h1>
+            <p>The Engineering Quiz Competition is a thrilling knowledge-based event where innovation meets intellect. This quiz challenges participants to push the boundaries of their engineering knowledge through a series of mind-bending questions and problem-solving tasks. Covering a wide spectrum of topics including core engineering concepts, emerging technologies, and real-world applications, the competition is structured in multiple rounds to test speed, accuracy, and teamwork.</p>
+            <p>  </p><br>
+            <p><strong>Why Participate?</strong> </p>
+            <p></p><br>
+            <p>Enhance technical knowledge</p>
+            <p>Win prizes and certificates</p>
+            <p>Networking with peers and professionals</p>
+            <p>Boost confidence and academic profile</p>
+        </div>
+        <h1 class="heading" id="prizes"><span>rules & guidelines</span></h1>
+    
+        <div>
+            <ul>
+                <li>Each team must consist of 1 to 3 members</li>
+                <li>Only undergraduate engineering students are allowed to participate. Valid student ID is mandatory.</li>
+                <li>Use of mobile phones, calculators, or any external aids is strictly prohibited.</li>
+                <li>Any form of cheating or misconduct will result in immediate disqualification.</li>
+                <li>The quizmaster's and judge's decisions are final and binding.</li>
+            </ul>
+        </div>
+    </section>
+    <!--prizes section-->
+    <section class="event-section" id="prizes-contact">
+  <div class="row-flex">
+
+    <!-- Prizes Section -->
+    <div class="prize-box" id="prizes">
+      <h1 class="heading1"><span>Prizes</span> Distribution</h1>
+      <div class="class">
+        <span>🏆 <strong>1st Prize:</strong> ₹10,000 + Trophy</span><br>
+      <span>🥈 <strong>2nd Prize:</strong> ₹5,000</span><br>
+      <span>📜 <strong>Certificates:</strong> For all participants</span>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-box" id="contact">
+      <h1 class="heading1"><span>Contact</span> Information</h1>
+      <div class="class">
+        <p><strong>K Asritha (Event Lead):</strong> 23pa1a05b5@vishnu.edu.in</p>
+      <p><strong>K Saranya (Tech Lead):</strong> 23pa1a05a9@vishnu.edu.in</p>
+      <p><strong>K Kavya (Event Supporter):</strong> 23pa1a05c1@vishnu.edu.in</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+    <script>
+        let menu=document.querySelector('#menu-bars');
+let navbar=document.querySelector('.navbar');
+
+menu.onclick =() =>{
+    menu.classList.toggle('fa-times');
+    navbar.classList.toggle('active')
+}
+window.onscroll =() =>{
+    menu.classList.remove('fa-times');
+    navbar.classList.remove('active')
+}
+    </script>
+</body>
+</html>

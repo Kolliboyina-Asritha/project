@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1e90ff;
+      font-size: 1.8rem;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #ccc;
+      display: block;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background-color: #2a2a2a;
+      color: #fff;
+      width: 100%;
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    button {
+      background-color: #1e90ff;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #006ad1;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #1e90ff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm" class="login-form">
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <div class="footer">
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        let accessToken='';
+        let username = '';
+    function parseJwt(token) {
+    try {
+      const base64Payload = token.split('.')[1];
+      const decodedPayload = atob(base64Payload);
+      return JSON.parse(decodedPayload);
+    } catch (e) {
+      console.error("Invalid JWT", e);
+      return null;
+    }
+  }
+  async function refreshAccessToken() {
+        try{
+          const res=await fetch('/refresh',{
+            method:'POST',
+            credentials:'include'
+          });
+          const data=await res.json();
+          if(res.ok){
+            accessToken=data.accessToken;
+            const decoded = parseJwt(accessToken);
+           username = decoded?.UserInfo?.username || '';
+
+           console.log('AccessToken refreshed:', accessToken);
+           console.log('Username from token:', username);
+            
+          }
+          else{
+            console.warn('refresh token invalid or expired');
+          }
+        }
+        catch (err){
+          console.error('refresh failed:',err);
+        }
+      }
+      window.onload=refreshAccessToken;
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+           e.preventDefault();
+
+           const user = document.getElementById('username').value;
+           const pwd = document.getElementById('password').value;
+
+           try {
+             const res = await fetch('/auth', {
+                  method: 'POST',
+                  headers: {
+                     'Content-Type': 'application/json'
+                    },
+                  body: JSON.stringify({ user, pwd })
+                });
+
+               const data = await res.json();
+
+               if (res.ok) {
+                  
+                  accessToken = data.accessToken;
+                 const decoded = parseJwt(accessToken);
+                 username = decoded?.UserInfo?.username || '';
+
+
+                  alert('Login successful!');
+                 // Optionally: store token or redirect
+                  console.log('Access Token:',accessToken);
+                 
+
+                  window.location.href = '/'; // or your dashboard
+                } 
+               else {
+                   alert(data.message || 'Login failed!');
+                }
+            } catch (err) {
+              console.error('Error:', err);
+               alert('Something went wrong');
+            }
+       });
+       
+    </script>
+</body>
+</html>
