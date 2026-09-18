@@ -42,7 +42,8 @@ const handleLogin=async (req,res)=>{
         res.cookie('jwt', refreshToken, {
          httpOnly: true,
          maxAge: 24*60*60*1000, // 10 minutes
-         sameSite: 'Lax'
+         sameSite: 'none',
+            secure:true
         });//If you're testing locally (e.g., http://localhost:3000), secure: true and sameSite: 'none' will silently block the cookie.
 
         res.json({accessToken});
